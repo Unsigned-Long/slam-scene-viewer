@@ -111,41 +111,33 @@ namespace ns_viewer {
         pcl::PointXYZ rightBottom = {right, bottom, front};
         pcl::PointXYZ center = {0.0, 0.0, 0.0};
 
-        pcl::PointCloud<pcl::PointXYZ>::Ptr polygon1(new pcl::PointCloud<pcl::PointXYZ>);
-        polygon1->push_back(leftBottom);
-        polygon1->push_back(leftTop);
-        polygon1->push_back(rightTop);
-        polygon1->push_back(rightBottom);
-
-        pcl::PointCloud<pcl::PointXYZ>::Ptr polygon2(new pcl::PointCloud<pcl::PointXYZ>);
-        polygon2->push_back(center);
-        polygon2->push_back(leftBottom);
-        polygon2->push_back(leftTop);
-
-        pcl::PointCloud<pcl::PointXYZ>::Ptr polygon3(new pcl::PointCloud<pcl::PointXYZ>);
-        polygon3->push_back(center);
-        polygon3->push_back(rightBottom);
-        polygon3->push_back(rightTop);
-
-        std::vector<std::pair<std::string, pcl::PointCloud<pcl::PointXYZ>::Ptr>> data{
-                {"FRONT", polygon1},
-                {"LEFT",  polygon2},
-                {"RIGHT", polygon3}
+        std::vector<std::pair<pcl::PointXYZ, pcl::PointXYZ>> data{
+                {leftBottom,  rightBottom},
+                {leftTop,     rightTop},
+                {leftTop,     leftBottom},
+                {rightTop,    rightBottom},
+                {leftTop,     center},
+                {leftBottom,  center},
+                {rightTop,    center},
+                {rightBottom, center},
         };
-
-        for (const auto &item: data) {
-            for (auto &p: (*item.second)) {
-                auto result = CtoW.trans(Eigen::Vector3f(p.x, p.y, p.z));
-                p.x = result(0), p.y = result(1), p.z = result(2);
+        for (int i = 0; i < data.size(); ++i) {
+            auto &[p1, p2] = data.at(i);
+            const std::string curName = name + "-" + std::to_string(i);
+            {
+                auto r1 = CtoW.trans(Eigen::Vector3f(p1.x, p1.y, p1.z));
+                p1.x = r1(0), p1.y = r1(1), p1.z = r1(2);
             }
-            _viewer->addPolygon<pcl::PointXYZ>(item.second, color.r, color.g, color.b, name + "-" + item.first);
+            {
+                auto r2 = CtoW.trans(Eigen::Vector3f(p2.x, p2.y, p2.z));
+                p2.x = r2(0), p2.y = r2(1), p2.z = r2(2);
+            }
+            _viewer->addLine(p1, p2, color.r, color.g, color.b, curName);
             _viewer->setShapeRenderingProperties(
-                    pcl::visualization::RenderingProperties::PCL_VISUALIZER_LINE_WIDTH, size * 4.0,
-                    name + "-" + item.first
+                    pcl::visualization::RenderingProperties::PCL_VISUALIZER_LINE_WIDTH, size * 4.0, curName
             );
             _viewer->setShapeRenderingProperties(
-                    pcl::visualization::RenderingProperties::PCL_VISUALIZER_OPACITY,
-                    color.a, name + "-" + item.first
+                    pcl::visualization::RenderingProperties::PCL_VISUALIZER_OPACITY, color.a, curName
             );
         }
     }
