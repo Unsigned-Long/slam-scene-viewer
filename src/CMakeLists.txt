@@ -19,4 +19,5 @@ target_link_libraries(
         PRIVATE
         ${PCL_LIBRARIES}
         Sophus::Sophus
+        pthread
 )

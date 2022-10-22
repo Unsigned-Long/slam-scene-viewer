@@ -3,23 +3,33 @@
 //
 
 #include "pcl-viewer/scene_viewer.h"
-#include "artwork/logger/logger.h"
 
 namespace ns_viewer {
     void SceneViewer::KeyBoardCallBack(const pcl::visualization::KeyboardEvent &ev) {
         if (ev.isAltPressed()) {
             std::int64_t curTimeStamp = std::chrono::system_clock::now().time_since_epoch().count();
-            const std::string filename = "../scene/" + std::to_string(curTimeStamp) + ".png";
+            const std::string filename = _saveDir + "/" + std::to_string(curTimeStamp) + ".png";
             _viewer->saveScreenshot(filename);
             LOG_INFO("the scene shot is saved to path: '", filename, "'.");
         }
     }
 
     void SceneViewer::RunSingleThread(int time) {
+        LOG_INFO("adjust the camera and press 'Alter' key to save the current scene.")
         while (!_viewer->wasStopped()) {
             // ms
             _viewer->spinOnce(time);
         }
+    }
+
+    void SceneViewer::RunMultiThread(int time) {
+        LOG_INFO("adjust the camera and press 'Alter' key to save the current scene.")
+        this->_thread = std::make_shared<std::thread>([this, time]() {
+            while (!_viewer->wasStopped()) {
+                // ms
+                _viewer->spinOnce(time);
+            }
+        });
     }
 
     void SceneViewer::AddCubePlane(const std::string &name, const CubePlane &plane, bool lineMode, float opacity) {
@@ -70,6 +80,12 @@ namespace ns_viewer {
         _viewer->addCoordinateSystem(
                 size, Eigen::Affine3f(curToWorld.affine()), name
         );
+    }
+
+    SceneViewer::~SceneViewer() {
+        if (_thread != nullptr) {
+            _thread->join();
+        }
     }
 
 }

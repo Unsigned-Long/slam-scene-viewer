@@ -5,19 +5,30 @@
 #ifndef PCL_VIEWER_SCENE_VIEWER_H
 #define PCL_VIEWER_SCENE_VIEWER_H
 
+#include <utility>
+
 #include "colour.hpp"
 #include "pose.hpp"
 #include "cube_plane.h"
 #include "pcl/visualization/pcl_visualizer.h"
+#include "thread"
+#include "artwork/logger/logger.h"
+
 
 namespace ns_viewer {
     class SceneViewer {
     private:
         pcl::visualization::PCLVisualizer::Ptr _viewer;
+        std::shared_ptr<std::thread> _thread;
+        std::string _saveDir;
+
     public:
 
-        explicit SceneViewer(const Colour &background = Colour::White(), bool addOriginCoord = true)
-                : _viewer(new pcl::visualization::PCLVisualizer("SceneViewer")) {
+        explicit SceneViewer(std::string sceneShotSaveDir = "",
+                             const Colour &background = Colour::White(),
+                             bool addOriginCoord = true)
+                : _viewer(new pcl::visualization::PCLVisualizer("SceneViewer")),
+                  _thread(nullptr), _saveDir(std::move(sceneShotSaveDir)) {
             _viewer->setBackgroundColor(background.r, background.g, background.b);
             // coordinates
             if (addOriginCoord) {
@@ -30,7 +41,11 @@ namespace ns_viewer {
             );
         }
 
+        virtual ~SceneViewer();
+
         void RunSingleThread(int time = 100);
+
+        void RunMultiThread(int time = 100);
 
         void AddCubePlane(const std::string &name, const CubePlane &plane, bool lineMode = false, float opacity = 1.0f);
 

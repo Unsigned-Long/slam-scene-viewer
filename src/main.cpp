@@ -6,7 +6,7 @@
 int main(int argc, char **argv) {
     try {
         using namespace ns_viewer;
-        SceneViewer viewer;
+        SceneViewer viewer("../scene-shot");
         {
             CubePlane plane(0.0f, 0.0f, 45.0f, 2.0f, 3.0f, 0.0f);
             viewer.AddCubePlane("CubePlane", plane, true, 0.5);
@@ -14,7 +14,9 @@ int main(int argc, char **argv) {
             viewer.AddPose("Pose", plane.curToW);
         }
 
-        viewer.RunSingleThread();
+        // viewer.RunSingleThread();
+        viewer.RunMultiThread();
+        LOG_VAR("Hello, world!")
 
     } catch (const std::exception &e) {
     }

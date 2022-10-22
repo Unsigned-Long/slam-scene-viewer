@@ -64,7 +64,7 @@ namespace ns_viewer {
 
     public:
         [[nodiscard]] pcl::PointCloud<pcl::PointXYZRGBA>::Ptr
-        GenerateFeatures(int size, const Colour &color, int faceOption = Face::ALL) const;
+        GenerateFeatures(int size, const Colour &colour, int faceOption = Face::ALL) const;
 
         [[nodiscard]] pcl::PointCloud<pcl::PointXYZRGBA>::Ptr
         GenerateFeatures(int size, int faceOption = Face::ALL) const;

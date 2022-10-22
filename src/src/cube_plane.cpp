@@ -84,7 +84,7 @@ namespace ns_viewer {
     }
 
     pcl::PointCloud<pcl::PointXYZRGBA>::Ptr
-    CubePlane::GenerateFeatures(int size, const Colour &color, int faceOption) const {
+    CubePlane::GenerateFeatures(int size, const Colour &colour, int faceOption) const {
         if (faceOption == Face::ALL) {
             faceOption = Face::FRONT | Face::BACK | Face::LEFT | Face::RIGHT | Face::TOP | Face::BOTTOM;
         }
@@ -105,10 +105,10 @@ namespace ns_viewer {
                 pt3d.x = pt2d.x;
                 pt3d.y = 0.5f * ySpan;
                 pt3d.z = pt2d.y;
-                pt3d.r = static_cast<std::uint8_t>(color.r * 255.0f);
-                pt3d.g = static_cast<std::uint8_t>(color.g * 255.0f);
-                pt3d.b = static_cast<std::uint8_t>(color.b * 255.0f);
-                pt3d.a = static_cast<std::uint8_t>(color.a * 255.0f);
+                pt3d.r = static_cast<std::uint8_t>(colour.r * 255.0f);
+                pt3d.g = static_cast<std::uint8_t>(colour.g * 255.0f);
+                pt3d.b = static_cast<std::uint8_t>(colour.b * 255.0f);
+                pt3d.a = static_cast<std::uint8_t>(colour.a * 255.0f);
                 trans(pt3d);
                 feature->push_back(pt3d);
             }
@@ -122,10 +122,10 @@ namespace ns_viewer {
                 pt3d.x = pt2d.x;
                 pt3d.y = -0.5f * ySpan;
                 pt3d.z = pt2d.y;
-                pt3d.r = static_cast<std::uint8_t>(color.r * 255.0f);
-                pt3d.g = static_cast<std::uint8_t>(color.g * 255.0f);
-                pt3d.b = static_cast<std::uint8_t>(color.b * 255.0f);
-                pt3d.a = static_cast<std::uint8_t>(color.a * 255.0f);
+                pt3d.r = static_cast<std::uint8_t>(colour.r * 255.0f);
+                pt3d.g = static_cast<std::uint8_t>(colour.g * 255.0f);
+                pt3d.b = static_cast<std::uint8_t>(colour.b * 255.0f);
+                pt3d.a = static_cast<std::uint8_t>(colour.a * 255.0f);
                 trans(pt3d);
                 feature->push_back(pt3d);
             }
@@ -139,10 +139,10 @@ namespace ns_viewer {
                 pt3d.x = -0.5f * xSpan;
                 pt3d.y = pt2d.x;
                 pt3d.z = pt2d.y;
-                pt3d.r = static_cast<std::uint8_t>(color.r * 255.0f);
-                pt3d.g = static_cast<std::uint8_t>(color.g * 255.0f);
-                pt3d.b = static_cast<std::uint8_t>(color.b * 255.0f);
-                pt3d.a = static_cast<std::uint8_t>(color.a * 255.0f);
+                pt3d.r = static_cast<std::uint8_t>(colour.r * 255.0f);
+                pt3d.g = static_cast<std::uint8_t>(colour.g * 255.0f);
+                pt3d.b = static_cast<std::uint8_t>(colour.b * 255.0f);
+                pt3d.a = static_cast<std::uint8_t>(colour.a * 255.0f);
                 trans(pt3d);
                 feature->push_back(pt3d);
             }
@@ -156,10 +156,10 @@ namespace ns_viewer {
                 pt3d.x = 0.5f * xSpan;
                 pt3d.y = pt2d.x;
                 pt3d.z = pt2d.y;
-                pt3d.r = static_cast<std::uint8_t>(color.r * 255.0f);
-                pt3d.g = static_cast<std::uint8_t>(color.g * 255.0f);
-                pt3d.b = static_cast<std::uint8_t>(color.b * 255.0f);
-                pt3d.a = static_cast<std::uint8_t>(color.a * 255.0f);
+                pt3d.r = static_cast<std::uint8_t>(colour.r * 255.0f);
+                pt3d.g = static_cast<std::uint8_t>(colour.g * 255.0f);
+                pt3d.b = static_cast<std::uint8_t>(colour.b * 255.0f);
+                pt3d.a = static_cast<std::uint8_t>(colour.a * 255.0f);
                 trans(pt3d);
                 feature->push_back(pt3d);
             }
@@ -173,10 +173,10 @@ namespace ns_viewer {
                 pt3d.x = pt2d.x;
                 pt3d.y = pt2d.y;
                 pt3d.z = 0.5f * zSpan;
-                pt3d.r = static_cast<std::uint8_t>(color.r * 255.0f);
-                pt3d.g = static_cast<std::uint8_t>(color.g * 255.0f);
-                pt3d.b = static_cast<std::uint8_t>(color.b * 255.0f);
-                pt3d.a = static_cast<std::uint8_t>(color.a * 255.0f);
+                pt3d.r = static_cast<std::uint8_t>(colour.r * 255.0f);
+                pt3d.g = static_cast<std::uint8_t>(colour.g * 255.0f);
+                pt3d.b = static_cast<std::uint8_t>(colour.b * 255.0f);
+                pt3d.a = static_cast<std::uint8_t>(colour.a * 255.0f);
                 trans(pt3d);
                 feature->push_back(pt3d);
             }
@@ -190,10 +190,10 @@ namespace ns_viewer {
                 pt3d.x = pt2d.x;
                 pt3d.y = pt2d.y;
                 pt3d.z = -0.5f * zSpan;
-                pt3d.r = static_cast<std::uint8_t>(color.r * 255.0f);
-                pt3d.g = static_cast<std::uint8_t>(color.g * 255.0f);
-                pt3d.b = static_cast<std::uint8_t>(color.b * 255.0f);
-                pt3d.a = static_cast<std::uint8_t>(color.a * 255.0f);
+                pt3d.r = static_cast<std::uint8_t>(colour.r * 255.0f);
+                pt3d.g = static_cast<std::uint8_t>(colour.g * 255.0f);
+                pt3d.b = static_cast<std::uint8_t>(colour.b * 255.0f);
+                pt3d.a = static_cast<std::uint8_t>(colour.a * 255.0f);
                 trans(pt3d);
                 feature->push_back(pt3d);
             }
