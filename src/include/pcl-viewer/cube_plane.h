@@ -47,7 +47,8 @@ namespace ns_viewer {
         static std::default_random_engine RANDOM_ENGINE;
 
     public:
-        Posef curToW;
+        Posef WtoL;
+        Posef LtoW;
         float xSpan;
         float ySpan;
         float zSpan;

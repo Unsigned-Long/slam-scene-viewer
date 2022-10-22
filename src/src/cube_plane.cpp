@@ -16,8 +16,9 @@ namespace ns_viewer {
         auto y = Eigen::AngleAxisf(DEG_TO_RAD * yaw, Vector3f(0.0, 0.0, 1.0));
         auto p = Eigen::AngleAxisf(DEG_TO_RAD * pitch, Vector3f(1.0, 0.0, 0.0));
         auto r = Eigen::AngleAxisf(DEG_TO_RAD * roll, Vector3f(0.0, 1.0, 0.0));
-        auto angleAxis = r * p * y;
-        curToW = Posef(angleAxis.matrix(), Vector3f(dx, dy, dz));
+        auto rotWtoL = r * p * y;
+        LtoW = Posef(rotWtoL.matrix().inverse(), Vector3f(dx, dy, dz));
+        WtoL = LtoW.inverse();
     }
 
     bool CubePlane::IsFaceWithALL(int obj) {
@@ -74,10 +75,10 @@ namespace ns_viewer {
         // feature cloud
         pcl::PointCloud<pcl::PointXYZRGBA>::Ptr feature = GenerateFeatures(size, Colour::Black(), faceOption);
         for (auto &p: feature->points) {
-            const auto &color = COLOUR_WHEEL.GetUniqueColour();
-            p.r = static_cast<std::uint8_t>(color.r * 255.0f);
-            p.g = static_cast<std::uint8_t>(color.g * 255.0f);
-            p.b = static_cast<std::uint8_t>(color.b * 255.0f);
+            const auto &uniqueColour = COLOUR_WHEEL.GetUniqueColour();
+            p.r = static_cast<std::uint8_t>(uniqueColour.r * 255.0f);
+            p.g = static_cast<std::uint8_t>(uniqueColour.g * 255.0f);
+            p.b = static_cast<std::uint8_t>(uniqueColour.b * 255.0f);
         }
 
         return feature;
@@ -93,7 +94,7 @@ namespace ns_viewer {
 
         auto trans = [this](pcl::PointXYZRGBA &p) {
             Eigen::Vector3f pt(p.x, p.y, p.z);
-            Eigen::Vector3f result = curToW.trans(pt);
+            Eigen::Vector3f result = LtoW.trans(pt);
             p.x = result(0), p.y = result(1), p.z = result(2);
         };
 

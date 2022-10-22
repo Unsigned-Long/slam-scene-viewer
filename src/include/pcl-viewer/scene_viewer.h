@@ -22,10 +22,15 @@ namespace ns_viewer {
         std::shared_ptr<std::thread> _thread;
         std::string _saveDir;
 
+        static ColourWheel COLOUR_WHEEL;
+        static std::size_t CUBE_PLANE_COUNT;
+        static std::size_t FEATURE_COUNT;
+        static std::size_t POSE_COUNT;
+        static std::size_t CAMERA_COUNT;
+
     public:
 
-        explicit SceneViewer(std::string sceneShotSaveDir = "",
-                             const Colour &background = Colour::White(),
+        explicit SceneViewer(std::string sceneShotSaveDir = "", const Colour &background = Colour::White(),
                              bool addOriginCoord = true)
                 : _viewer(new pcl::visualization::PCLVisualizer("SceneViewer")),
                   _thread(nullptr), _saveDir(std::move(sceneShotSaveDir)) {
@@ -47,12 +52,15 @@ namespace ns_viewer {
 
         void RunMultiThread(int time = 100);
 
-        void AddCubePlane(const std::string &name, const CubePlane &plane, bool lineMode = false, float opacity = 1.0f);
+        void AddCubePlane(const CubePlane &plane, bool lineMode = false, float opacity = 1.0f);
 
-        void AddFeatures(const std::string &name, const pcl::PointCloud<pcl::PointXYZRGBA>::Ptr &features,
+        void AddFeatures(const pcl::PointCloud<pcl::PointXYZRGBA>::Ptr &features,
                          float size = 6.0f, float opacity = 1.0f);
 
-        void AddPose(const std::string &name, const Posef &pose, float size = 0.3);
+        void AddPose(const Posef &LtoW, float size = 0.3);
+
+        void AddCamera(const Posef &CtoW,
+                       const Colour &color = COLOUR_WHEEL.GetUniqueColour(), float size = 0.3f);
 
     protected:
 

@@ -55,6 +55,10 @@ namespace ns_viewer {
             return Eigen::Quaternion<Scale>(rotation);
         }
 
+        Pose inverse() const {
+            return Pose(rotation.inverse(), -rotation.inverse() * translation, timeStamp);
+        }
+
     };
 
     using Posed = Pose<double>;
