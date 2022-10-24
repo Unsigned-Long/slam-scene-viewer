@@ -59,6 +59,11 @@ namespace ns_viewer {
             return Pose(rotation.inverse(), -rotation.inverse() * translation, timeStamp);
         }
 
+        template<class TarScale>
+        Pose<TarScale> cast() const {
+            return Pose<TarScale>(rotation.template cast<TarScale>(), translation.template cast<TarScale>());
+        }
+
     };
 
     using Posed = Pose<double>;
