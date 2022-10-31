@@ -12,16 +12,17 @@ int main(int argc, char **argv) {
             viewer.AddCubePlane(plane, true, 0.5);
             viewer.AddFeatures(plane.GenerateFeatures(10, CubePlane::ALL), 6.0, 0.6);
             viewer.AddPose(plane.LtoW);
+            viewer.RunSingleThread();
 
             Eigen::AngleAxisf r1(-M_PI_4, Eigen::Vector3f(0, 0, 1));
             Eigen::AngleAxisf r2(+M_PI_2, Eigen::Vector3f(1, 0, 0));
             auto rot = (r2 * r1).toRotationMatrix();
             auto CtoW = Posef(rot.inverse(), Eigen::Vector3f(2, 1, 1));
             viewer.AddCamera(CtoW, Colour::Black());
+            viewer.RunSingleThread();
         }
 
-        // viewer.RunSingleThread();
-        viewer.RunMultiThread();
+        viewer.RunSingleThread();
         LOG_VAR("Hello, world!")
 
     } catch (const std::exception &e) {

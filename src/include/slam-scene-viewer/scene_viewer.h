@@ -28,24 +28,17 @@ namespace ns_viewer {
         static std::size_t POSE_COUNT;
         static std::size_t CAMERA_COUNT;
 
+        const Colour _bgc;
+        const bool _addOriginCoord;
+
     public:
 
         explicit SceneViewer(std::string sceneShotSaveDir = "", const Colour &background = Colour::White(),
                              bool addOriginCoord = true)
                 : _viewer(new pcl::visualization::PCLVisualizer("SceneViewer")),
-                  _thread(nullptr), _saveDir(std::move(sceneShotSaveDir)) {
-            _viewer->setBackgroundColor(background.r, background.g, background.b);
-            // coordinates
-            if (addOriginCoord) {
-                _viewer->addCoordinateSystem(1.0, "Origin");
-            }
-            if (std::filesystem::exists(_saveDir)) {
-                // shot
-                using std::placeholders::_1;
-                _viewer->registerKeyboardCallback(
-                        [this](auto &&PH1) { KeyBoardCallBack(std::forward<decltype(PH1)>(PH1)); }
-                );
-            }
+                  _thread(nullptr), _saveDir(std::move(sceneShotSaveDir)),
+                  _bgc(background), _addOriginCoord(addOriginCoord) {
+            InitSceneViewer();
         }
 
         virtual ~SceneViewer();
@@ -77,6 +70,10 @@ namespace ns_viewer {
     protected:
 
         void KeyBoardCallBack(const pcl::visualization::KeyboardEvent &ev);
+
+        void RemoveAllEntities();
+
+        void InitSceneViewer();
     };
 
 }

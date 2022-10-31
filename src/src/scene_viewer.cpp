@@ -28,6 +28,8 @@ namespace ns_viewer {
             // ms
             _viewer->spinOnce(time);
         }
+        _viewer.reset(new pcl::visualization::PCLVisualizer("SceneViewer"));
+        InitSceneViewer();
     }
 
     void SceneViewer::RunMultiThread(int time) {
@@ -161,6 +163,27 @@ namespace ns_viewer {
     SceneViewer &SceneViewer::operator()(const std::string &name) {
         this->SetWindowName(name);
         return *this;
+    }
+
+    void SceneViewer::RemoveAllEntities() {
+        _viewer->removeAllShapes();
+        _viewer->removeAllPointClouds();
+        _viewer->removeAllCoordinateSystems();
+    }
+
+    void SceneViewer::InitSceneViewer() {
+        _viewer->setBackgroundColor(_bgc.r, _bgc.g, _bgc.b);
+        // coordinates
+        if (_addOriginCoord) {
+            _viewer->addCoordinateSystem(1.0, "Origin");
+        }
+        if (std::filesystem::exists(_saveDir)) {
+            // shot
+            using std::placeholders::_1;
+            _viewer->registerKeyboardCallback(
+                    [this](auto &&PH1) { KeyBoardCallBack(std::forward<decltype(PH1)>(PH1)); }
+            );
+        }
     }
 
 }
