@@ -5,7 +5,7 @@
 #ifndef LIC_CALIB_ODOMETER_POSE_H
 #define LIC_CALIB_ODOMETER_POSE_H
 
-#include "pcl-viewer/utils.hpp"
+#include "utils.hpp"
 #include "Eigen/Geometry"
 
 namespace ns_viewer {

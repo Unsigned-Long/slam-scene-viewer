@@ -1,7 +1,7 @@
 //
 // Created by csl on 10/16/22.
 //
-#include "pcl-viewer/scene_viewer.h"
+#include "scene_viewer.h"
 
 int main(int argc, char **argv) {
     try {
