@@ -2,8 +2,8 @@
 // Created by csl on 10/7/22.
 //
 
-#ifndef LIC_CALIB_COLOUR_H
-#define LIC_CALIB_COLOUR_H
+#ifndef SLAM_SCENE_VIEWER_COLOUR_H
+#define SLAM_SCENE_VIEWER_COLOUR_H
 
 #include "ostream"
 #include "numeric"
@@ -162,4 +162,4 @@ namespace ns_viewer {
 }
 
 
-#endif //LIC_CALIB_COLOUR_H
+#endif //SLAM_SCENE_VIEWER_COLOUR_H

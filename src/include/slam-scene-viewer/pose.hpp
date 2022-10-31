@@ -2,8 +2,8 @@
 // Created by csl on 10/3/22.
 //
 
-#ifndef LIC_CALIB_ODOMETER_POSE_H
-#define LIC_CALIB_ODOMETER_POSE_H
+#ifndef SLAM_SCENE_VIEWER_POSE_H
+#define SLAM_SCENE_VIEWER_POSE_H
 
 #include "slam-scene-viewer/utils.hpp"
 #include "Eigen/Geometry"
@@ -70,4 +70,4 @@ namespace ns_viewer {
     using Posef = Pose<float>;
 }
 
-#endif //LIC_CALIB_ODOMETER_POSE_H
+#endif //SLAM_SCENE_VIEWER_POSE_H

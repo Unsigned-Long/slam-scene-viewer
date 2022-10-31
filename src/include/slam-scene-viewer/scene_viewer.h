@@ -2,8 +2,8 @@
 // Created by csl on 10/22/22.
 //
 
-#ifndef PCL_VIEWER_SCENE_VIEWER_H
-#define PCL_VIEWER_SCENE_VIEWER_H
+#ifndef SLAM_SCENE_VIEWER_SCENE_VIEWER_H
+#define SLAM_SCENE_VIEWER_SCENE_VIEWER_H
 
 #include <utility>
 
@@ -68,4 +68,4 @@ namespace ns_viewer {
 
 }
 
-#endif //PCL_VIEWER_SCENE_VIEWER_H
+#endif //SLAM_SCENE_VIEWER_SCENE_VIEWER_H

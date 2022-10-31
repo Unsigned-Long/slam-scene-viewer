@@ -2,8 +2,8 @@
 // Created by csl on 10/22/22.
 //
 
-#ifndef PCL_VIEWER_UTILS_HPP
-#define PCL_VIEWER_UTILS_HPP
+#ifndef SLAM_SCENE_VIEWER_UTILS_HPP
+#define SLAM_SCENE_VIEWER_UTILS_HPP
 
 #include "Eigen/Dense"
 
@@ -78,4 +78,4 @@ namespace ns_viewer {
 
 }
 
-#endif //PCL_VIEWER_UTILS_HPP
+#endif //SLAM_SCENE_VIEWER_UTILS_HPP

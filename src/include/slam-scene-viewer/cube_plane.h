@@ -2,8 +2,8 @@
 // Created by csl on 10/22/22.
 //
 
-#ifndef PCL_VIEWER_CUBE_PLANE_H
-#define PCL_VIEWER_CUBE_PLANE_H
+#ifndef SLAM_SCENE_VIEWER_CUBE_PLANE_H
+#define SLAM_SCENE_VIEWER_CUBE_PLANE_H
 
 #include "slam-scene-viewer/colour.hpp"
 #include "slam-scene-viewer/pose.hpp"
@@ -79,4 +79,4 @@ namespace ns_viewer {
     };
 }
 
-#endif //PCL_VIEWER_CUBE_PLANE_H
+#endif //SLAM_SCENE_VIEWER_CUBE_PLANE_H
