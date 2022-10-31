@@ -186,5 +186,9 @@ namespace ns_viewer {
         }
     }
 
+    ColourWheel &SceneViewer::GetColourWheel() {
+        return COLOUR_WHEEL;
+    }
+
 }
 

@@ -47,6 +47,8 @@ namespace ns_viewer {
 
         static void SetColourWheel(const ColourWheel &colourWheel);
 
+        static ColourWheel &GetColourWheel();
+
         void SetWindowName(const std::string &name);
 
         SceneViewer &operator()(const std::string &name);
