@@ -13,8 +13,10 @@ add_library(
 target_include_directories(
         ${PROJECT_NAME} PUBLIC
         ${PCL_INCLUDE_DIRS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
         ${EIGEN_INCLUDE_DIRS}
+
+        "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
+        "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/include>"
 )
 
 target_link_libraries(
@@ -23,10 +25,11 @@ target_link_libraries(
         pthread
 )
 
-add_executable(${PROJECT_NAME}_prog ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp ${SRC_FILES})
+# example & test
+
+add_executable(${PROJECT_NAME}_prog ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp)
 
 target_link_libraries(
-        ${PROJECT_NAME}_prog
-        PRIVATE
+        ${PROJECT_NAME}_prog PRIVATE
         ${PROJECT_NAME}
 )
