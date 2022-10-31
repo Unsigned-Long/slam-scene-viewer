@@ -56,6 +56,8 @@ namespace ns_viewer {
 
         void SetWindowName(const std::string &name);
 
+        SceneViewer &operator()(const std::string &name);
+
     public:
 
         void RunSingleThread(int time = 100);

@@ -158,5 +158,10 @@ namespace ns_viewer {
         _viewer->setWindowName(name);
     }
 
+    SceneViewer &SceneViewer::operator()(const std::string &name) {
+        this->SetWindowName(name);
+        return *this;
+    }
+
 }
 
