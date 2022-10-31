@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(pcl-viewer)
+project(slam_scene_viewer)
 
 set(CMAKE_CXX_STANDARD 17)
 
