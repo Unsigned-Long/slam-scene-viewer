@@ -53,6 +53,9 @@ namespace ns_viewer {
         [[nodiscard]] const auto &GetViewer() const;
 
         static void SetColourWheel(const ColourWheel &colourWheel);
+
+        void SetWindowName(const std::string &name);
+
     public:
 
         void RunSingleThread(int time = 100);

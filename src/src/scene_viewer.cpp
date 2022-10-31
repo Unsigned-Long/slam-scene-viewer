@@ -154,5 +154,9 @@ namespace ns_viewer {
         SceneViewer::COLOUR_WHEEL = colourWheel;
     }
 
+    void SceneViewer::SetWindowName(const std::string &name) {
+        _viewer->setWindowName(name);
+    }
+
 }
 
