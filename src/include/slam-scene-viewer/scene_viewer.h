@@ -16,7 +16,7 @@
 
 namespace ns_viewer {
     class SceneViewer {
-    private:
+    protected:
         pcl::visualization::PCLVisualizer::Ptr _viewer;
         std::shared_ptr<std::thread> _thread;
         std::string _saveDir;
