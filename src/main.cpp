@@ -1,7 +1,7 @@
 //
 // Created by csl on 10/16/22.
 //
-#include "scene_viewer.h"
+#include "slam-scene-viewer/scene_viewer.h"
 
 int main(int argc, char **argv) {
     try {

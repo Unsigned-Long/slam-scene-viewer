@@ -2,7 +2,7 @@
 // Created by csl on 10/22/22.
 //
 
-#include "scene_viewer.h"
+#include "slam-scene-viewer/scene_viewer.h"
 
 namespace ns_viewer {
     ColourWheel SceneViewer::COLOUR_WHEEL = ColourWheel(1.0f);

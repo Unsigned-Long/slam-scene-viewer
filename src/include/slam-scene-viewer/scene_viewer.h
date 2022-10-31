@@ -7,13 +7,12 @@
 
 #include <utility>
 
-#include "colour.hpp"
-#include "pose.hpp"
-#include "cube_plane.h"
+#include "slam-scene-viewer/colour.hpp"
+#include "slam-scene-viewer/pose.hpp"
+#include "slam-scene-viewer/cube_plane.h"
 #include "pcl/visualization/pcl_visualizer.h"
 #include "thread"
 #include "artwork/logger/logger.h"
-
 
 namespace ns_viewer {
     class SceneViewer {

@@ -2,7 +2,7 @@
 // Created by csl on 10/22/22.
 //
 
-#include "cube_plane.h"
+#include "slam-scene-viewer/cube_plane.h"
 
 namespace ns_viewer {
     ColourWheel CubePlane::COLOUR_WHEEL = ColourWheel(1.0f);

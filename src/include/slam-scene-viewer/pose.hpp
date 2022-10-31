@@ -5,7 +5,7 @@
 #ifndef LIC_CALIB_ODOMETER_POSE_H
 #define LIC_CALIB_ODOMETER_POSE_H
 
-#include "utils.hpp"
+#include "slam-scene-viewer/utils.hpp"
 #include "Eigen/Geometry"
 
 namespace ns_viewer {

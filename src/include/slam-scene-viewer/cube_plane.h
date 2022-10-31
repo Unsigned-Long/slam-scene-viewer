@@ -5,8 +5,8 @@
 #ifndef PCL_VIEWER_CUBE_PLANE_H
 #define PCL_VIEWER_CUBE_PLANE_H
 
-#include "colour.hpp"
-#include "pose.hpp"
+#include "slam-scene-viewer/colour.hpp"
+#include "slam-scene-viewer/pose.hpp"
 #include "pcl/point_cloud.h"
 #include "pcl/point_types.h"
 #include "random"
