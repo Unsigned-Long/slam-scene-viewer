@@ -1,7 +1,5 @@
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
-set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/lib)
-
 find_package(PCL REQUIRED)
 find_package(Eigen3)
 
