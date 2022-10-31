@@ -21,7 +21,9 @@ namespace ns_viewer {
     }
 
     void SceneViewer::RunSingleThread(int time) {
-        LOG_INFO("adjust the camera and press 'Alter' key to save the current scene.")
+        if (std::filesystem::exists(_saveDir)) {
+            LOG_INFO("adjust the camera and press 'Alter' key to save the current scene.")
+        }
         while (!_viewer->wasStopped()) {
             // ms
             _viewer->spinOnce(time);
@@ -29,7 +31,9 @@ namespace ns_viewer {
     }
 
     void SceneViewer::RunMultiThread(int time) {
-        LOG_INFO("adjust the camera and press 'Alter' key to save the current scene.")
+        if (std::filesystem::exists(_saveDir)) {
+            LOG_INFO("adjust the camera and press 'Alter' key to save the current scene.")
+        }
         this->_thread = std::make_shared<std::thread>([this, time]() {
             while (!_viewer->wasStopped()) {
                 // ms

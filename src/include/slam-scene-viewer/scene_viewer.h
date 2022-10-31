@@ -13,13 +13,14 @@
 #include "pcl/visualization/pcl_visualizer.h"
 #include "thread"
 #include "artwork/logger/logger.h"
+#include "filesystem"
 
 namespace ns_viewer {
     class SceneViewer {
     protected:
         pcl::visualization::PCLVisualizer::Ptr _viewer;
         std::shared_ptr<std::thread> _thread;
-        std::string _saveDir;
+        const std::string _saveDir;
 
         static ColourWheel COLOUR_WHEEL;
         static std::size_t CUBE_PLANE_COUNT;
@@ -38,11 +39,13 @@ namespace ns_viewer {
             if (addOriginCoord) {
                 _viewer->addCoordinateSystem(1.0, "Origin");
             }
-            // shot
-            using std::placeholders::_1;
-            _viewer->registerKeyboardCallback(
-                    [this](auto &&PH1) { KeyBoardCallBack(std::forward<decltype(PH1)>(PH1)); }
-            );
+            if (std::filesystem::exists(_saveDir)) {
+                // shot
+                using std::placeholders::_1;
+                _viewer->registerKeyboardCallback(
+                        [this](auto &&PH1) { KeyBoardCallBack(std::forward<decltype(PH1)>(PH1)); }
+                );
+            }
         }
 
         virtual ~SceneViewer();
