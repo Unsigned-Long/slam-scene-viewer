@@ -146,5 +146,13 @@ namespace ns_viewer {
         }
     }
 
+    const auto &SceneViewer::GetViewer() const {
+        return _viewer;
+    }
+
+    void SceneViewer::SetColourWheel(const ColourWheel &colourWheel) {
+        SceneViewer::COLOUR_WHEEL = colourWheel;
+    }
+
 }
 

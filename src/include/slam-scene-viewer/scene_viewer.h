@@ -50,6 +50,11 @@ namespace ns_viewer {
 
         virtual ~SceneViewer();
 
+        [[nodiscard]] const auto &GetViewer() const;
+
+        static void SetColourWheel(const ColourWheel &colourWheel);
+    public:
+
         void RunSingleThread(int time = 100);
 
         void RunMultiThread(int time = 100);
