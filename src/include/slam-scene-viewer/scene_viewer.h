@@ -20,23 +20,22 @@ namespace ns_viewer {
     protected:
         pcl::visualization::PCLVisualizer::Ptr _viewer;
         const std::string _saveDir;
+        const Colour _bgc;
+        static ColourWheel COLOUR_WHEEL;
+        const bool _addOriginCoord;
 
     private:
         std::shared_ptr<std::thread> _thread;
 
-        static ColourWheel COLOUR_WHEEL;
         static std::size_t CUBE_PLANE_COUNT;
         static std::size_t FEATURE_COUNT;
         static std::size_t POSE_COUNT;
         static std::size_t CAMERA_COUNT;
-        static std::size_t LINE_COUNT;
 
+        static std::size_t LINE_COUNT;
         const static std::string SHAPE_PREFIX;
         const static std::string POINT_CLOUD_PREFIX;
         const static std::string COORD_PREFIX;
-
-        const Colour _bgc;
-        const bool _addOriginCoord;
 
     public:
 
