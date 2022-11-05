@@ -11,13 +11,16 @@ namespace ns_viewer {
     std::size_t SceneViewer::POSE_COUNT = 0;
     std::size_t SceneViewer::CAMERA_COUNT = 0;
     std::size_t SceneViewer::LINE_COUNT = 0;
+    const std::string SceneViewer::SHAPE_PREFIX = "S";
+    const std::string SceneViewer::POINT_CLOUD_PREFIX = "P";
+    const std::string SceneViewer::COORD_PREFIX = "C";
 
     void SceneViewer::KeyBoardCallBack(const pcl::visualization::KeyboardEvent &ev) {
         if (ev.isAltPressed()) {
             std::int64_t curTimeStamp = std::chrono::system_clock::now().time_since_epoch().count();
             const std::string filename = _saveDir + "/" + std::to_string(curTimeStamp) + ".png";
             _viewer->saveScreenshot(filename);
-            LOG_INFO("the scene shot is saved to path: '", filename, "'.");
+            LOG_INFO("the scene shot is saved to path: '", filename, "'.")
         }
     }
 
@@ -45,8 +48,11 @@ namespace ns_viewer {
         });
     }
 
-    void SceneViewer::AddCubePlane(const CubePlane &plane, bool lineMode, float opacity) {
-        const auto name = "CUBE-PLANE-" + std::to_string(CUBE_PLANE_COUNT++);
+    std::vector<std::string> SceneViewer::AddCubePlane(const CubePlane &plane, bool lineMode, float opacity) {
+        std::vector<std::string> names;
+
+        const auto name = GetShapeName("CUBE-PLANE-" + std::to_string(CUBE_PLANE_COUNT++));
+        AppendNames(names, name);
         const auto &localToWorld = plane.LtoW;
         const auto &color = plane.color;
 
@@ -73,11 +79,15 @@ namespace ns_viewer {
                 pcl::visualization::RenderingProperties::PCL_VISUALIZER_COLOR,
                 color.r, color.g, color.b, name
         );
+        return names;
     }
 
-    void SceneViewer::AddFeatures(const pcl::PointCloud<pcl::PointXYZRGBA>::Ptr &features,
-                                  float size, float opacity) {
-        const auto name = "FEATURE-" + std::to_string(FEATURE_COUNT++);
+    std::vector<std::string> SceneViewer::AddFeatures(const pcl::PointCloud<pcl::PointXYZRGBA>::Ptr &features,
+                                                      float size, float opacity) {
+        std::vector<std::string> names;
+
+        const auto name = GetPointCloudName("FEATURE-" + std::to_string(FEATURE_COUNT++));
+        AppendNames(names, name);
 
         for (auto &p: features->points) {
             p.a = static_cast<std::uint8_t>(opacity * 255.0f);
@@ -86,10 +96,15 @@ namespace ns_viewer {
         _viewer->setPointCloudRenderingProperties(
                 pcl::visualization::RenderingProperties::PCL_VISUALIZER_POINT_SIZE, size, name
         );
+        return names;
     }
 
-    void SceneViewer::AddPose(const Posef &LtoW, float size) {
-        const auto name = "POSE-" + std::to_string(POSE_COUNT++);
+    std::vector<std::string> SceneViewer::AddPose(const Posef &LtoW, float size) {
+        std::vector<std::string> names;
+
+        const auto name = GetCoordName("POSE-" + std::to_string(POSE_COUNT++));
+        AppendNames(names, name);
+
 
         Eigen::Isometry3f localToWorld(LtoW.quaternion());
         localToWorld.pretranslate(LtoW.translation);
@@ -97,6 +112,8 @@ namespace ns_viewer {
         _viewer->addCoordinateSystem(
                 size, Eigen::Affine3f(localToWorld.affine()), name
         );
+
+        return names;
     }
 
     SceneViewer::~SceneViewer() {
@@ -105,10 +122,11 @@ namespace ns_viewer {
         }
     }
 
-    void SceneViewer::AddCamera(const Posef &CtoW, const Colour &color, float size) {
-        const auto name = "CAMERA-" + std::to_string(CAMERA_COUNT++);
+    std::vector<std::string> SceneViewer::AddCamera(const Posef &CtoW, const Colour &color, float size) {
+        std::vector<std::string> names;
 
-        AddPose(CtoW, size);
+        const auto name = "CAMERA-" + std::to_string(CAMERA_COUNT++);
+        AppendNames(names, AddPose(CtoW, size));
 
         float left = -0.8f * size, right = 0.8f * size, top = -0.6f * size, bottom = 0.6f * size, front = 0.8f * size;
 
@@ -116,7 +134,9 @@ namespace ns_viewer {
         pcl::PointXYZ leftTop = {left, top, front};
         pcl::PointXYZ rightTop = {right, top, front};
         pcl::PointXYZ rightBottom = {right, bottom, front};
-        pcl::PointXYZ center = {0.0, 0.0, 0.0};
+        pcl::PointXYZ center = {0.0,
+                                0.0,
+                                0.0};
 
         std::vector<std::pair<pcl::PointXYZ, pcl::PointXYZ>> data{
                 {leftBottom,  rightBottom},
@@ -128,22 +148,21 @@ namespace ns_viewer {
                 {rightTop,    center},
                 {rightBottom, center},
         };
-        for (int i = 0; i < data.size(); ++i) {
-            auto &[p1, p2] = data.at(i);
-            const std::string curName = name + "-" + std::to_string(i);
-            {
-                auto r1 = CtoW.trans(Eigen::Vector3f(p1.x, p1.y, p1.z));
-                p1.x = r1(0), p1.y = r1(1), p1.z = r1(2);
-            }
-            {
-                auto r2 = CtoW.trans(Eigen::Vector3f(p2.x, p2.y, p2.z));
-                p2.x = r2(0), p2.y = r2(1), p2.z = r2(2);
-            }
-            AddLine(p1, p2, color, size * 4.0f);
+        for (auto &[p1, p2]: data) {
+
+            auto r1 = CtoW.trans(Eigen::Vector3f(p1.x, p1.y, p1.z));
+            p1.x = r1(0), p1.y = r1(1), p1.z = r1(2);
+
+            auto r2 = CtoW.trans(Eigen::Vector3f(p2.x, p2.y, p2.z));
+            p2.x = r2(0), p2.y = r2(1), p2.z = r2(2);
+
+            AppendNames(names, AddLine(p1, p2, color, size * 4.0f));
         }
+
+        return names;
     }
 
-    const auto &SceneViewer::GetViewer() const {
+    pcl::visualization::PCLVisualizer::Ptr SceneViewer::GetViewer() {
         return _viewer;
     }
 
@@ -160,7 +179,7 @@ namespace ns_viewer {
         return *this;
     }
 
-    void SceneViewer::RemoveAllEntities() {
+    void SceneViewer::RemoveEntities() {
         _viewer->removeAllShapes();
         _viewer->removeAllPointClouds();
         _viewer->removeAllCoordinateSystems();
@@ -185,8 +204,13 @@ namespace ns_viewer {
         return COLOUR_WHEEL;
     }
 
-    void SceneViewer::AddLine(const pcl::PointXYZ &p1, const pcl::PointXYZ &p2, const Colour &color, float size) {
-        const auto name = "LINE-" + std::to_string(LINE_COUNT++);
+    std::vector<std::string>
+    SceneViewer::AddLine(const pcl::PointXYZ &p1, const pcl::PointXYZ &p2, const Colour &color, float size) {
+        std::vector<std::string> names;
+
+        const auto name = GetShapeName("LINE-" + std::to_string(LINE_COUNT++));
+        AppendNames(names, name);
+
         _viewer->addLine(p1, p2, color.r, color.g, color.b, name);
         _viewer->setShapeRenderingProperties(
                 pcl::visualization::RenderingProperties::PCL_VISUALIZER_LINE_WIDTH, size, name
@@ -194,6 +218,28 @@ namespace ns_viewer {
         _viewer->setShapeRenderingProperties(
                 pcl::visualization::RenderingProperties::PCL_VISUALIZER_OPACITY, color.a, name
         );
+        return names;
+    }
+
+    void SceneViewer::AppendNames(std::vector<std::string> &names, const std::string &name) {
+        names.push_back(name);
+    }
+
+    void SceneViewer::AppendNames(std::vector<std::string> &names, const std::vector<std::string> &newNames) {
+        names.resize(names.size() + newNames.size());
+        std::copy_n(newNames.cbegin(), newNames.size(), names.end() - static_cast<int>(newNames.size()));
+    }
+
+    std::string SceneViewer::GetShapeName(const std::string &desc) {
+        return SHAPE_PREFIX + '-' + desc;
+    }
+
+    std::string SceneViewer::GetPointCloudName(const std::string &desc) {
+        return POINT_CLOUD_PREFIX + '-' + desc;
+    }
+
+    std::string SceneViewer::GetCoordName(const std::string &desc) {
+        return COORD_PREFIX + '-' + desc;
     }
 
 }
