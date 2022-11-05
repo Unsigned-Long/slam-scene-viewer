@@ -19,28 +19,60 @@ namespace ns_viewer {
             /**
              * @brief options
              */
-            ALL = 1 << 0,
+            NONE = 1 << 0,
             FRONT = 1 << 1,
             BACK = 1 << 2,
             LEFT = 1 << 3,
             RIGHT = 1 << 4,
             TOP = 1 << 5,
-            BOTTOM = 1 << 6
+            BOTTOM = 1 << 6,
+            ALL = FRONT | BACK | LEFT | RIGHT | TOP | BOTTOM
         };
 
-        static bool IsFaceWithALL(int obj);
+        static bool IsFaceWith(int desired, int curFace) {
+            return (desired == (desired & curFace));
+        }
 
-        static bool IsFaceWithFRONT(int obj);
+        /**
+         * @brief override operator '<<' for type 'Face'
+         */
+        friend std::ostream &operator<<(std::ostream &os, const Face &curFace) {
+            std::stringstream stream;
+            int count = 0;
+            if (IsFaceWith(FRONT, curFace)) {
+                stream << "FRONT";
+                ++count;
+            }
+            if (IsFaceWith(BACK, curFace)) {
+                stream << " | BACK";
+                ++count;
+            }
+            if (IsFaceWith(LEFT, curFace)) {
+                stream << " | LEFT";
+                ++count;
+            }
+            if (IsFaceWith(RIGHT, curFace)) {
+                stream << " | RIGHT";
+                ++count;
+            }
+            if (IsFaceWith(TOP, curFace)) {
+                stream << " | TOP";
+                ++count;
+            }
+            if (IsFaceWith(BOTTOM, curFace)) {
+                stream << " | BOTTOM";
+                ++count;
+            }
+            if (count == 0) {
+                os << "NONE";
+            } else if (count == 6) {
+                os << "ALL";
+            } else {
+                os << stream.str();
+            }
+            return os;
+        };
 
-        static bool IsFaceWithBACK(int obj);
-
-        static bool IsFaceWithLEFT(int obj);
-
-        static bool IsFaceWithRIGHT(int obj);
-
-        static bool IsFaceWithTOP(int obj);
-
-        static bool IsFaceWithBOTTOM(int obj);
 
     protected:
         static ColourWheel COLOUR_WHEEL;
@@ -68,7 +100,7 @@ namespace ns_viewer {
         GenerateFeatures(int size, const Colour &colour, int faceOption = Face::ALL) const;
 
         [[nodiscard]] pcl::PointCloud<pcl::PointXYZRGBA>::Ptr
-        GenerateFeatures(int size, int faceOption = Face::ALL) const;
+        GenerateFeatures(int size, int faceOption = Face::ALL, float opacity = 1.0f) const;
 
     protected:
         [[nodiscard]] static pcl::PointCloud<pcl::PointXY>::Ptr

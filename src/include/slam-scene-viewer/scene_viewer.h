@@ -68,8 +68,8 @@ namespace ns_viewer {
 
         std::vector<std::string> AddCubePlane(const CubePlane &plane, bool lineMode = false, float opacity = 1.0f);
 
-        std::vector<std::string> AddFeatures(const pcl::PointCloud<pcl::PointXYZRGBA>::Ptr &features,
-                                             float size = 6.0f, float opacity = 1.0f);
+        std::vector<std::string>
+        AddFeatures(const pcl::PointCloud<pcl::PointXYZRGBA>::Ptr &features, float size = 6.0f);
 
         std::vector<std::string> AddPose(const Posef &LtoW, float size = 0.3);
 

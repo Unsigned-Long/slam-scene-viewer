@@ -82,16 +82,13 @@ namespace ns_viewer {
         return names;
     }
 
-    std::vector<std::string> SceneViewer::AddFeatures(const pcl::PointCloud<pcl::PointXYZRGBA>::Ptr &features,
-                                                      float size, float opacity) {
+    std::vector<std::string>
+    SceneViewer::AddFeatures(const pcl::PointCloud<pcl::PointXYZRGBA>::Ptr &features, float size) {
         std::vector<std::string> names;
 
         const auto name = GetPointCloudName("FEATURE-" + std::to_string(FEATURE_COUNT++));
         AppendNames(names, name);
 
-        for (auto &p: features->points) {
-            p.a = static_cast<std::uint8_t>(opacity * 255.0f);
-        }
         _viewer->addPointCloud(features, name);
         _viewer->setPointCloudRenderingProperties(
                 pcl::visualization::RenderingProperties::PCL_VISUALIZER_POINT_SIZE, size, name

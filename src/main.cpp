@@ -10,7 +10,7 @@ int main(int argc, char **argv) {
 
         CubePlane plane(0.0f, 0.0f, -30.0f, 1.0f, 2.0f, 1.0f);
         auto planeIdName = viewer.AddCubePlane(plane, true, 0.5);
-        auto featureIdName = viewer.AddFeatures(plane.GenerateFeatures(10, CubePlane::ALL), 6.0, 0.6);
+        auto featureIdName = viewer.AddFeatures(plane.GenerateFeatures(10, CubePlane::ALL, 1.0f), 6.0f);
         auto poseIdName = viewer.AddPose(plane.LtoW);
 
         Eigen::AngleAxisf r1(-M_PI_4, Eigen::Vector3f(0, 0, 1));

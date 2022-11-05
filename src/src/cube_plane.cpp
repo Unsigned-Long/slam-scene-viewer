@@ -21,34 +21,6 @@ namespace ns_viewer {
         WtoL = LtoW.inverse();
     }
 
-    bool CubePlane::IsFaceWithALL(int obj) {
-        return (Face::ALL == (Face::ALL & obj));
-    }
-
-    bool CubePlane::IsFaceWithFRONT(int obj) {
-        return (Face::FRONT == (Face::FRONT & obj));
-    }
-
-    bool CubePlane::IsFaceWithBACK(int obj) {
-        return (Face::BACK == (Face::BACK & obj));
-    }
-
-    bool CubePlane::IsFaceWithLEFT(int obj) {
-        return (Face::LEFT == (Face::LEFT & obj));
-    }
-
-    bool CubePlane::IsFaceWithRIGHT(int obj) {
-        return (Face::RIGHT == (Face::RIGHT & obj));
-    }
-
-    bool CubePlane::IsFaceWithTOP(int obj) {
-        return (Face::TOP == (Face::TOP & obj));
-    }
-
-    bool CubePlane::IsFaceWithBOTTOM(int obj) {
-        return (Face::BOTTOM == (Face::BOTTOM & obj));
-    }
-
     pcl::PointCloud<pcl::PointXY>::Ptr
     CubePlane::GenerateFeatures(int size, float xMin, float xMax, float yMin, float yMax) {
         // generate random feature
@@ -68,10 +40,7 @@ namespace ns_viewer {
     }
 
     pcl::PointCloud<pcl::PointXYZRGBA>::Ptr
-    CubePlane::GenerateFeatures(int size, int faceOption) const {
-        if (faceOption == Face::ALL) {
-            faceOption = Face::FRONT | Face::BACK | Face::LEFT | Face::RIGHT | Face::TOP | Face::BOTTOM;
-        }
+    CubePlane::GenerateFeatures(int size, int faceOption, float opacity) const {
         // feature cloud
         pcl::PointCloud<pcl::PointXYZRGBA>::Ptr feature = GenerateFeatures(size, Colour::Black(), faceOption);
         for (auto &p: feature->points) {
@@ -79,16 +48,13 @@ namespace ns_viewer {
             p.r = static_cast<std::uint8_t>(uniqueColour.r * 255.0f);
             p.g = static_cast<std::uint8_t>(uniqueColour.g * 255.0f);
             p.b = static_cast<std::uint8_t>(uniqueColour.b * 255.0f);
+            p.a = static_cast<std::uint8_t>(opacity * 255.0f);
         }
-
         return feature;
     }
 
     pcl::PointCloud<pcl::PointXYZRGBA>::Ptr
     CubePlane::GenerateFeatures(int size, const Colour &colour, int faceOption) const {
-        if (faceOption == Face::ALL) {
-            faceOption = Face::FRONT | Face::BACK | Face::LEFT | Face::RIGHT | Face::TOP | Face::BOTTOM;
-        }
         // feature cloud
         pcl::PointCloud<pcl::PointXYZRGBA>::Ptr feature(new pcl::PointCloud<pcl::PointXYZRGBA>);
 
@@ -98,7 +64,7 @@ namespace ns_viewer {
             p.x = result(0), p.y = result(1), p.z = result(2);
         };
 
-        if (IsFaceWithFRONT(faceOption)) {
+        if (IsFaceWith(FRONT, faceOption)) {
             auto cloud2d = GenerateFeatures(size, -0.5f * xSpan, 0.5f * xSpan, -0.5f * zSpan, 0.5f * zSpan);
             for (int i = 0; i < size; ++i) {
                 const auto &pt2d = cloud2d->at(i);
@@ -115,7 +81,7 @@ namespace ns_viewer {
             }
         }
 
-        if (IsFaceWithBACK(faceOption)) {
+        if (IsFaceWith(BACK, faceOption)) {
             auto cloud2d = GenerateFeatures(size, -0.5f * xSpan, 0.5f * xSpan, -0.5f * zSpan, 0.5f * zSpan);
             for (int i = 0; i < size; ++i) {
                 const auto &pt2d = cloud2d->at(i);
@@ -132,7 +98,7 @@ namespace ns_viewer {
             }
         }
 
-        if (IsFaceWithLEFT(faceOption)) {
+        if (IsFaceWith(LEFT, faceOption)) {
             auto cloud2d = GenerateFeatures(size, -0.5f * ySpan, 0.5f * ySpan, -0.5f * zSpan, 0.5f * zSpan);
             for (int i = 0; i < size; ++i) {
                 const auto &pt2d = cloud2d->at(i);
@@ -149,7 +115,7 @@ namespace ns_viewer {
             }
         }
 
-        if (IsFaceWithRIGHT(faceOption)) {
+        if (IsFaceWith(RIGHT, faceOption)) {
             auto cloud2d = GenerateFeatures(size, -0.5f * ySpan, 0.5f * ySpan, -0.5f * zSpan, 0.5f * zSpan);
             for (int i = 0; i < size; ++i) {
                 const auto &pt2d = cloud2d->at(i);
@@ -166,7 +132,7 @@ namespace ns_viewer {
             }
         }
 
-        if (IsFaceWithTOP(faceOption)) {
+        if (IsFaceWith(TOP, faceOption)) {
             auto cloud2d = GenerateFeatures(size, -0.5f * xSpan, 0.5f * xSpan, -0.5f * ySpan, 0.5f * ySpan);
             for (int i = 0; i < size; ++i) {
                 const auto &pt2d = cloud2d->at(i);
@@ -183,7 +149,7 @@ namespace ns_viewer {
             }
         }
 
-        if (IsFaceWithBOTTOM(faceOption)) {
+        if (IsFaceWith(BOTTOM, faceOption)) {
             auto cloud2d = GenerateFeatures(size, -0.5f * xSpan, 0.5f * xSpan, -0.5f * ySpan, 0.5f * ySpan);
             for (int i = 0; i < size; ++i) {
                 const auto &pt2d = cloud2d->at(i);
