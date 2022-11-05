@@ -27,6 +27,7 @@ namespace ns_viewer {
         static std::size_t FEATURE_COUNT;
         static std::size_t POSE_COUNT;
         static std::size_t CAMERA_COUNT;
+        static std::size_t LINE_COUNT;
 
         const Colour _bgc;
         const bool _addOriginCoord;
@@ -68,6 +69,9 @@ namespace ns_viewer {
 
         void AddCamera(const Posef &CtoW,
                        const Colour &color = COLOUR_WHEEL.GetUniqueColour(), float size = 0.3f);
+
+        void AddLine(const pcl::PointXYZ &p1, const pcl::PointXYZ &p2,
+                     const Colour &color = COLOUR_WHEEL.GetUniqueColour(), float size = 2.0f);
 
     protected:
 

@@ -10,6 +10,7 @@ namespace ns_viewer {
     std::size_t SceneViewer::FEATURE_COUNT = 0;
     std::size_t SceneViewer::POSE_COUNT = 0;
     std::size_t SceneViewer::CAMERA_COUNT = 0;
+    std::size_t SceneViewer::LINE_COUNT = 0;
 
     void SceneViewer::KeyBoardCallBack(const pcl::visualization::KeyboardEvent &ev) {
         if (ev.isAltPressed()) {
@@ -138,13 +139,7 @@ namespace ns_viewer {
                 auto r2 = CtoW.trans(Eigen::Vector3f(p2.x, p2.y, p2.z));
                 p2.x = r2(0), p2.y = r2(1), p2.z = r2(2);
             }
-            _viewer->addLine(p1, p2, color.r, color.g, color.b, curName);
-            _viewer->setShapeRenderingProperties(
-                    pcl::visualization::RenderingProperties::PCL_VISUALIZER_LINE_WIDTH, size * 4.0, curName
-            );
-            _viewer->setShapeRenderingProperties(
-                    pcl::visualization::RenderingProperties::PCL_VISUALIZER_OPACITY, color.a, curName
-            );
+            AddLine(p1, p2, color, size * 4.0f);
         }
     }
 
@@ -188,6 +183,17 @@ namespace ns_viewer {
 
     ColourWheel &SceneViewer::GetColourWheel() {
         return COLOUR_WHEEL;
+    }
+
+    void SceneViewer::AddLine(const pcl::PointXYZ &p1, const pcl::PointXYZ &p2, const Colour &color, float size) {
+        const auto name = "LINE-" + std::to_string(LINE_COUNT++);
+        _viewer->addLine(p1, p2, color.r, color.g, color.b, name);
+        _viewer->setShapeRenderingProperties(
+                pcl::visualization::RenderingProperties::PCL_VISUALIZER_LINE_WIDTH, size, name
+        );
+        _viewer->setShapeRenderingProperties(
+                pcl::visualization::RenderingProperties::PCL_VISUALIZER_OPACITY, color.a, name
+        );
     }
 
 }
