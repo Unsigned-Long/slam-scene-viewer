@@ -23,6 +23,7 @@ namespace ns_viewer {
         const Colour _bgc;
         static ColourWheel COLOUR_WHEEL;
         const bool _addOriginCoord;
+        std::mutex _mt;
 
     private:
         std::shared_ptr<std::thread> _thread;
@@ -58,6 +59,12 @@ namespace ns_viewer {
         void SetWindowName(const std::string &name);
 
         SceneViewer &operator()(const std::string &name);
+
+        std::mutex &GetMutex();
+
+        inline void Lock();
+
+        inline void UnLock();
 
     public:
 

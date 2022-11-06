@@ -42,8 +42,12 @@ namespace ns_viewer {
         }
         this->_thread = std::make_shared<std::thread>([this, time]() {
             while (!_viewer->wasStopped()) {
+                Lock();
+                _viewer->spinOnce(1);
+                UnLock();
+
                 // ms
-                _viewer->spinOnce(time);
+                std::this_thread::sleep_for(std::chrono::milliseconds(time));
             }
         });
     }
@@ -237,6 +241,18 @@ namespace ns_viewer {
 
     std::string SceneViewer::GetCoordName(const std::string &desc) {
         return COORD_PREFIX + '-' + desc;
+    }
+
+    std::mutex &SceneViewer::GetMutex() {
+        return _mt;
+    }
+
+    void SceneViewer::Lock() {
+        _mt.lock();
+    }
+
+    void SceneViewer::UnLock() {
+        _mt.unlock();
     }
 
 }
