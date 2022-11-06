@@ -52,7 +52,7 @@ namespace ns_viewer {
         });
     }
 
-    std::vector<std::string> SceneViewer::AddCubePlane(const CubePlane &plane, bool lineMode, float opacity) {
+    std::vector<std::string> SceneViewer::AddCubePlane(const CubePlane &plane, bool lineMode) {
         std::vector<std::string> names;
 
         const auto name = GetShapeName("CUBE-PLANE-" + std::to_string(CUBE_PLANE_COUNT++));
@@ -73,11 +73,11 @@ namespace ns_viewer {
             _viewer->setShapeRenderingProperties(
                     pcl::visualization::RenderingProperties::PCL_VISUALIZER_LINE_WIDTH, 2.0, name
             );
-        } else {
-            _viewer->setShapeRenderingProperties(
-                    pcl::visualization::RenderingProperties::PCL_VISUALIZER_OPACITY, opacity, name
-            );
         }
+
+        _viewer->setShapeRenderingProperties(
+                pcl::visualization::RenderingProperties::PCL_VISUALIZER_OPACITY, color.a, name
+        );
 
         _viewer->setShapeRenderingProperties(
                 pcl::visualization::RenderingProperties::PCL_VISUALIZER_COLOR,

@@ -9,7 +9,8 @@ int main(int argc, char **argv) {
         SceneViewer viewer("../scene-shot");
 
         CubePlane plane(0.0f, 0.0f, -30.0f, 1.0f, 2.0f, 1.0f);
-        auto planeIdName = viewer.AddCubePlane(plane, true, 0.5);
+        plane.color.a = 0.1f;
+        auto planeIdName = viewer.AddCubePlane(plane, true);
         auto featureIdName = viewer.AddFeatures(plane.GenerateFeatures(10, CubePlane::ALL, 1.0f), 6.0f);
         auto poseIdName = viewer.AddPose(plane.LtoW);
 

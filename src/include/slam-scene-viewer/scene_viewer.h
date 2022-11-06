@@ -72,7 +72,7 @@ namespace ns_viewer {
 
         void RunMultiThread(int time = 100);
 
-        std::vector<std::string> AddCubePlane(const CubePlane &plane, bool lineMode = false, float opacity = 1.0f);
+        std::vector<std::string> AddCubePlane(const CubePlane &plane, bool lineMode = false);
 
         std::vector<std::string>
         AddFeatures(const pcl::PointCloud<pcl::PointXYZRGBA>::Ptr &features, float size = 6.0f);
