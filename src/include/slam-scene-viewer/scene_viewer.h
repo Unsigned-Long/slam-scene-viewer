@@ -62,9 +62,9 @@ namespace ns_viewer {
 
         std::mutex &GetMutex();
 
-        inline void Lock();
+        void Lock();
 
-        inline void UnLock();
+        void UnLock();
 
     public:
 
