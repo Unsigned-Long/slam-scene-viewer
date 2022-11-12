@@ -68,7 +68,12 @@ namespace ns_viewer {
             } else if (count == 6) {
                 os << "ALL";
             } else {
-                os << stream.str();
+                std::string str = stream.str();
+                if (str.at(1) == '|') {
+                    str = str.substr(3, str.size() - 3);
+                }
+                os << str;
+
             }
             return os;
         };
