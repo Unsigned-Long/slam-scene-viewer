@@ -31,9 +31,13 @@ namespace ns_viewer {
         static std::size_t CUBE_PLANE_COUNT;
         static std::size_t FEATURE_COUNT;
         static std::size_t POSE_COUNT;
-        static std::size_t CAMERA_COUNT;
-
         static std::size_t LINE_COUNT;
+        static std::size_t ARROW_COUNT;
+
+        static std::size_t CAMERA_COUNT;
+        static std::size_t LiDAR_COUNT;
+        static std::size_t IMU_COUNT;
+
         const static std::string SHAPE_PREFIX;
         const static std::string POINT_CLOUD_PREFIX;
         const static std::string COORD_PREFIX;
@@ -79,37 +83,28 @@ namespace ns_viewer {
 
         std::vector<std::string> AddPose(const Posef &LtoW, float size = 0.3);
 
-        std::vector<std::string> AddCamera(const Posef &CtoW,
-                                           const Colour &color = COLOUR_WHEEL.GetUniqueColour(), float size = 0.3f);
+        std::vector<std::string>
+        AddCamera(const Posef &CtoW, const Colour &color = COLOUR_WHEEL.GetUniqueColour(), float size = 0.3f);
 
-        std::vector<std::string> AddLine(const pcl::PointXYZ &p1, const pcl::PointXYZ &p2,
-                                         const Colour &color = COLOUR_WHEEL.GetUniqueColour(), float size = 2.0f);
+        std::vector<std::string>
+        AddLine(const pcl::PointXYZ &p1, const pcl::PointXYZ &p2,
+                const Colour &color = COLOUR_WHEEL.GetUniqueColour(), float size = 2.0f);
 
-        void RemoveEntities(const std::string &name) {
-            if (name.empty()) {
-                return;
-            } else {
-                if (name.front() == SHAPE_PREFIX.front()) {
-                    _viewer->removeShape(name);
-                } else if (name.front() == COORD_PREFIX.front()) {
-                    _viewer->removeCoordinateSystem(name);
-                } else if (name.front() == POINT_CLOUD_PREFIX.front()) {
-                    _viewer->removePointCloud(name);
-                }
-            }
-        }
+        std::vector<std::string>
+        AddArrow(const pcl::PointXYZ &from, const pcl::PointXYZ &to,
+                 const Colour &color = COLOUR_WHEEL.GetUniqueColour(), float size = 2.0f);
 
-        void RemoveEntities(const std::vector<std::string> &names) {
-            for (const auto &item: names) {
-                RemoveEntities(item);
-            }
-        }
+        std::vector<std::string>
+        AddLiDAR(const Posef &LtoW, const Colour &color = COLOUR_WHEEL.GetUniqueColour(), float size = 0.3f);
 
-        void RemoveEntities(const std::vector<std::vector<std::string>> &names) {
-            for (const auto &items: names) {
-                RemoveEntities(items);
-            }
-        }
+        std::vector<std::string>
+        AddIMU(const Posef &ItoW, const Colour &color = COLOUR_WHEEL.GetUniqueColour(), float size = 0.3f);
+
+        void RemoveEntities(const std::string &name);
+
+        void RemoveEntities(const std::vector<std::string> &names);
+
+        void RemoveEntities(const std::vector<std::vector<std::string>> &names);
 
         void RemoveEntities();
 
