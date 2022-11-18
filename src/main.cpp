@@ -37,6 +37,7 @@ int main(int argc, char **argv) {
         viewer.RemoveEntities(lineIdName);
 
     } catch (const std::exception &e) {
+        LOG_ERROR(e.what())
     }
     return 0;
 }
