@@ -40,9 +40,9 @@ namespace ns_viewer {
 
     public:
 
-        explicit SceneViewer(std::string sceneShotSaveDir = "", const Colour &background = Colour::White(),
-                             bool addOriginCoord = true)
-                : _viewer(new pcl::visualization::PCLVisualizer("SceneViewer")),
+        explicit SceneViewer(std::string sceneShotSaveDir = "", const std::string &winName = "SceneViewer",
+                             const Colour &background = Colour::White(), bool addOriginCoord = true)
+                : _viewer(new pcl::visualization::PCLVisualizer(winName)),
                   _thread(nullptr), _saveDir(std::move(sceneShotSaveDir)),
                   _bgc(background), _addOriginCoord(addOriginCoord) {
             InitSceneViewer();
