@@ -12,10 +12,10 @@
 #include "slam-scene-viewer/cube_plane.h"
 #include "pcl/visualization/pcl_visualizer.h"
 #include "thread"
-#include "artwork/logger/logger.h"
 #include "filesystem"
 
 namespace ns_viewer {
+
     class SceneViewer {
     protected:
         pcl::visualization::PCLVisualizer::Ptr _viewer;

@@ -62,7 +62,9 @@ namespace ns_viewer {
 
     void SceneViewer::RunSingleThread(int time) {
         if (std::filesystem::exists(_saveDir)) {
-            LOG_INFO("adjust the camera and press 'Alter' key to save the current scene.")
+            std::cout
+                    << "\033[92m\033[3m[SceneViewer] adjust the camera and press 'Alter' key to save the current scene.\033[0m"
+                    << std::endl;
         }
         while (!_viewer->wasStopped()) {
             // ms
@@ -74,7 +76,9 @@ namespace ns_viewer {
 
     void SceneViewer::RunMultiThread(int time) {
         if (std::filesystem::exists(_saveDir)) {
-            LOG_INFO("adjust the camera and press 'Alter' key to save the current scene.")
+            std::cout
+                    << "\033[92m\033[3m[SceneViewer] adjust the camera and press 'Alter' key to save the current scene.\033[0m"
+                    << std::endl;
         }
         this->_thread = std::make_shared<std::thread>([this, time]() {
             while (!_viewer->wasStopped()) {
@@ -358,7 +362,8 @@ namespace ns_viewer {
             std::int64_t curTimeStamp = std::chrono::system_clock::now().time_since_epoch().count();
             const std::string filename = _saveDir + "/" + std::to_string(curTimeStamp) + ".png";
             _viewer->saveScreenshot(filename);
-            LOG_INFO("the scene shot is saved to path: '", filename, "'.")
+            std::cout << "\033[92m\033[3m[SceneViewer] the scene shot is saved to path: '" << filename << "\033[0m"
+                      << std::endl;
         }
     }
 
@@ -397,6 +402,5 @@ namespace ns_viewer {
     std::string SceneViewer::GetCoordName(const std::string &desc) {
         return COORD_PREFIX + '-' + desc;
     }
-
 }
 

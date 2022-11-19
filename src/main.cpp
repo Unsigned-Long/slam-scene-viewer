@@ -37,9 +37,10 @@ int main(int argc, char **argv) {
         );
 
         viewer.RunMultiThread();
+        std::cout << "hello, world!" << std::endl;
 
     } catch (const std::exception &e) {
-        LOG_ERROR(e.what())
+        std::cout << e.what() << std::endl;
     }
     return 0;
 }
