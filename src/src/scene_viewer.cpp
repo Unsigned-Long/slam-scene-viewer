@@ -70,7 +70,7 @@ namespace ns_viewer {
             // ms
             _viewer->spinOnce(time);
         }
-        _viewer.reset(new pcl::visualization::PCLVisualizer("SceneViewer"));
+        RemoveEntities();
         InitSceneViewer();
     }
 
