@@ -12,6 +12,7 @@ namespace ns_viewer {
     std::size_t SceneViewer::POSE_COUNT = 0;
     std::size_t SceneViewer::LINE_COUNT = 0;
     std::size_t SceneViewer::ARROW_COUNT = 0;
+    std::size_t SceneViewer::SCAN_COUNT = 0;
 
     std::size_t SceneViewer::CAMERA_COUNT = 0;
     std::size_t SceneViewer::LiDAR_COUNT = 0;

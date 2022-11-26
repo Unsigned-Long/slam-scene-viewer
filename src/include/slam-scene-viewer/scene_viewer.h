@@ -33,6 +33,7 @@ namespace ns_viewer {
         static std::size_t POSE_COUNT;
         static std::size_t LINE_COUNT;
         static std::size_t ARROW_COUNT;
+        static std::size_t SCAN_COUNT;
 
         static std::size_t CAMERA_COUNT;
         static std::size_t LiDAR_COUNT;
@@ -81,6 +82,31 @@ namespace ns_viewer {
         std::vector<std::string>
         AddFeatures(const pcl::PointCloud<pcl::PointXYZRGBA>::Ptr &features, float size = 6.0f);
 
+        template<typename PointT>
+        std::vector<std::string> AddScan(const typename pcl::PointCloud<PointT>::Ptr &scan, float size = 1.0f,
+                                         bool useColor = false, const Colour &color = COLOUR_WHEEL.GetUniqueColour()) {
+            std::vector<std::string> names;
+
+            const auto name = GetPointCloudName("SCAN-" + std::to_string(SCAN_COUNT++));
+            AppendNames(names, name);
+
+            _viewer->addPointCloud<PointT>(scan, name);
+            _viewer->setPointCloudRenderingProperties(
+                    pcl::visualization::RenderingProperties::PCL_VISUALIZER_POINT_SIZE, size, name
+            );
+            if (useColor) {
+                _viewer->setPointCloudRenderingProperties(
+                        pcl::visualization::RenderingProperties::PCL_VISUALIZER_COLOR,
+                        color.r, color.g, color.b, name
+                );
+                _viewer->setPointCloudRenderingProperties(
+                        pcl::visualization::RenderingProperties::PCL_VISUALIZER_OPACITY,
+                        color.a, name
+                );
+            }
+            return names;
+        }
+
         std::vector<std::string> AddPose(const Posef &LtoW, float size = 0.3);
 
         std::vector<std::string>
@@ -118,11 +144,11 @@ namespace ns_viewer {
 
         static void AppendNames(std::vector<std::string> &names, const std::vector<std::string> &newNames);
 
-        static inline std::string GetShapeName(const std::string &desc);
+        static std::string GetShapeName(const std::string &desc);
 
-        static inline std::string GetPointCloudName(const std::string &desc);
+        static std::string GetPointCloudName(const std::string &desc);
 
-        static inline std::string GetCoordName(const std::string &desc);
+        static std::string GetCoordName(const std::string &desc);
     };
 
 }

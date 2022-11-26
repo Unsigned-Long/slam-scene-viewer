@@ -2,6 +2,7 @@
 // Created by csl on 10/16/22.
 //
 #include "slam-scene-viewer/scene_viewer.h"
+#include "pcl/io/pcd_io.h"
 
 int main(int argc, char **argv) {
     try {
@@ -34,6 +35,12 @@ int main(int argc, char **argv) {
                 {LtoW.translation(0), LtoW.translation(1), LtoW.translation(2)},
                 {ItoW.translation(0), ItoW.translation(1), ItoW.translation(2)},
                 ns_viewer::Colour(0.3f, 0.3f, 0.3f, 0.5f)
+        );
+
+        pcl::PointCloud<pcl::PointXYZI>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZI>);
+        pcl::io::loadPCDFile("/home/csl/CppWorks/artwork/slam-scene-viewer/data/scan.pcd", *cloud);
+        viewer.AddScan<pcl::PointXYZI>(
+                cloud, 2.0f, true, ns_viewer::SceneViewer::GetColourWheel().GetUniqueColour().WithAlpha(0.1f)
         );
 
         viewer.RunMultiThread();
