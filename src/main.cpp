@@ -40,8 +40,11 @@ int main(int argc, char **argv) {
         pcl::PointCloud<pcl::PointXYZI>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZI>);
         pcl::io::loadPCDFile("/home/csl/CppWorks/artwork/slam-scene-viewer/data/scan.pcd", *cloud);
         viewer.AddScan<pcl::PointXYZI>(
-                cloud, 2.0f, true, ns_viewer::SceneViewer::GetColourWheel().GetUniqueColour().WithAlpha(0.1f)
+                cloud, 2.0f, true, ns_viewer::SceneViewer::GetUniqueColour().WithAlpha(0.1f)
         );
+
+        viewer.AddBox(Eigen::Vector3f(-1.0f, -1.0f, -1.0f), Eigen::Vector3f(1.0f, 1.0f, 1.0f),
+                      SceneViewer::GetUniqueColour().WithAlpha(0.3f));
 
         viewer.RunMultiThread();
         std::cout << "hello, world!" << std::endl;

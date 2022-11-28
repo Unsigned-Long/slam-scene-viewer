@@ -61,6 +61,8 @@ namespace ns_viewer {
 
         static ColourWheel &GetColourWheel();
 
+        static Colour GetUniqueColour();
+
         void SetWindowName(const std::string &name);
 
         SceneViewer &operator()(const std::string &name);
@@ -78,6 +80,10 @@ namespace ns_viewer {
         void RunMultiThread(int time = 100);
 
         std::vector<std::string> AddCubePlane(const CubePlane &plane, bool lineMode = false);
+
+        std::vector<std::string>
+        AddBox(const Eigen::Vector3f &boxMin, const Eigen::Vector3f &boxMax,
+               const Colour &color = COLOUR_WHEEL.GetUniqueColour(), bool lineMode = true);
 
         std::vector<std::string>
         AddFeatures(const pcl::PointCloud<pcl::PointXYZRGBA>::Ptr &features, float size = 6.0f);

@@ -40,6 +40,10 @@ namespace ns_viewer {
         return COLOUR_WHEEL;
     }
 
+    Colour SceneViewer::GetUniqueColour() {
+        return COLOUR_WHEEL.GetUniqueColour();
+    }
+
     void SceneViewer::SetWindowName(const std::string &name) {
         _viewer->setWindowName(name);
     }
@@ -128,6 +132,35 @@ namespace ns_viewer {
                 pcl::visualization::RenderingProperties::PCL_VISUALIZER_COLOR,
                 color.r, color.g, color.b, name
         );
+        return names;
+    }
+
+    std::vector<std::string>
+    SceneViewer::AddBox(const Vector3f &boxMin, const Vector3f &boxMax, const Colour &color, bool lineMode) {
+        std::vector<std::string> names;
+
+        const auto name = GetShapeName("BOX-" + std::to_string(CUBE_PLANE_COUNT++));
+        AppendNames(names, name);
+
+        _viewer->addCube(
+                boxMin(0), boxMax(0), boxMin(1), boxMax(1), boxMin(2), boxMax(2),
+                color.r, color.g, color.b, name
+        );
+
+        if (lineMode) {
+            _viewer->setShapeRenderingProperties(
+                    pcl::visualization::RenderingProperties::PCL_VISUALIZER_REPRESENTATION,
+                    pcl::visualization::RenderingRepresentationProperties::PCL_VISUALIZER_REPRESENTATION_WIREFRAME,
+                    name
+            );
+            _viewer->setShapeRenderingProperties(
+                    pcl::visualization::RenderingProperties::PCL_VISUALIZER_LINE_WIDTH, 2.0, name
+            );
+        }
+        _viewer->setShapeRenderingProperties(
+                pcl::visualization::RenderingProperties::PCL_VISUALIZER_OPACITY, color.a, name
+        );
+
         return names;
     }
 
