@@ -421,8 +421,7 @@ namespace ns_viewer {
     }
 
     void SceneViewer::AppendNames(std::vector<std::string> &names, const std::vector<std::string> &newNames) {
-        names.resize(names.size() + newNames.size());
-        std::copy_n(newNames.cbegin(), newNames.size(), names.end() - static_cast<int>(newNames.size()));
+        names.insert(names.end(), newNames.cbegin(), newNames.cend());
     }
 
     std::string SceneViewer::GetShapeName(const std::string &desc) {
