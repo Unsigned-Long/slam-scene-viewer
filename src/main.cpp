@@ -25,15 +25,15 @@ int main(int argc, char **argv) {
         viewer.AddLiDAR(LtoW, ns_viewer::Colour::Red());
         viewer.AddIMU(ItoW, ns_viewer::Colour::Blue());
 
-        viewer.AddLine({1, 2, 1}, {0, 0, 0});
+        viewer.AddLine(Eigen::Vector3f{1, 2, 1}, Eigen::Vector3f{0, 0, 0});
         viewer.AddArrow(
-                {CtoW.translation(0), CtoW.translation(1), CtoW.translation(2)},
-                {ItoW.translation(0), ItoW.translation(1), ItoW.translation(2)},
+                Eigen::Vector3f{CtoW.translation(0), CtoW.translation(1), CtoW.translation(2)},
+                Eigen::Vector3f{ItoW.translation(0), ItoW.translation(1), ItoW.translation(2)},
                 ns_viewer::Colour(0.3f, 0.3f, 0.3f, 0.5f)
         );
         viewer.AddArrow(
-                {LtoW.translation(0), LtoW.translation(1), LtoW.translation(2)},
-                {ItoW.translation(0), ItoW.translation(1), ItoW.translation(2)},
+                Eigen::Vector3f{LtoW.translation(0), LtoW.translation(1), LtoW.translation(2)},
+                Eigen::Vector3f{ItoW.translation(0), ItoW.translation(1), ItoW.translation(2)},
                 ns_viewer::Colour(0.3f, 0.3f, 0.3f, 0.5f)
         );
 

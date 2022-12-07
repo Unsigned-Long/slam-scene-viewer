@@ -253,6 +253,11 @@ namespace ns_viewer {
     }
 
     std::vector<std::string>
+    SceneViewer::AddLine(const Vector3f &p1, const Vector3f &p2, const Colour &color, float size) {
+        return AddLine(EigenVecToPointXYZ(p1), EigenVecToPointXYZ(p2), color, size);
+    }
+
+    std::vector<std::string>
     SceneViewer::AddArrow(const pcl::PointXYZ &from, const pcl::PointXYZ &to, const Colour &color, float size) {
         std::vector<std::string> names;
 
@@ -282,6 +287,11 @@ namespace ns_viewer {
         );
 
         return names;
+    }
+
+    std::vector<std::string>
+    SceneViewer::AddArrow(const Vector3f &from, const Vector3f &to, const Colour &color, float size) {
+        return AddLine(EigenVecToPointXYZ(from), EigenVecToPointXYZ(to), color, size);
     }
 
     std::vector<std::string> SceneViewer::AddLiDAR(const Posef &LtoW, const Colour &color, float size) {
@@ -434,6 +444,14 @@ namespace ns_viewer {
 
     std::string SceneViewer::GetCoordName(const std::string &desc) {
         return COORD_PREFIX + '-' + desc;
+    }
+
+    Eigen::Vector3f SceneViewer::PointXYZtoEigenVec(const pcl::PointXYZ &p) {
+        return {p.x, p.y, p.z};
+    }
+
+    pcl::PointXYZ SceneViewer::EigenVecToPointXYZ(const Vector3f &p) {
+        return {p(0), p(1), p(2)};
     }
 }
 

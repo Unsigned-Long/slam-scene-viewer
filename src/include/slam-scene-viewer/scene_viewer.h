@@ -123,7 +123,15 @@ namespace ns_viewer {
                 const Colour &color = COLOUR_WHEEL.GetUniqueColour(), float size = 2.0f);
 
         std::vector<std::string>
+        AddLine(const Eigen::Vector3f &p1, const Eigen::Vector3f &p2,
+                const Colour &color = COLOUR_WHEEL.GetUniqueColour(), float size = 2.0f);
+
+        std::vector<std::string>
         AddArrow(const pcl::PointXYZ &from, const pcl::PointXYZ &to,
+                 const Colour &color = COLOUR_WHEEL.GetUniqueColour(), float size = 2.0f);
+
+        std::vector<std::string>
+        AddArrow(const Eigen::Vector3f &from, const Eigen::Vector3f &to,
                  const Colour &color = COLOUR_WHEEL.GetUniqueColour(), float size = 2.0f);
 
         std::vector<std::string>
@@ -155,6 +163,10 @@ namespace ns_viewer {
         static std::string GetPointCloudName(const std::string &desc);
 
         static std::string GetCoordName(const std::string &desc);
+
+        static Eigen::Vector3f PointXYZtoEigenVec(const pcl::PointXYZ &p);
+
+        static pcl::PointXYZ EigenVecToPointXYZ(const Eigen::Vector3f &p);
     };
 
 }
