@@ -453,5 +453,20 @@ namespace ns_viewer {
     pcl::PointXYZ SceneViewer::EigenVecToPointXYZ(const Vector3f &p) {
         return {p(0), p(1), p(2)};
     }
+
+    void SceneViewer::SetViewPort(const Posef &pose, int width, int height) {
+        const Eigen::Matrix3f rot = pose.rotation;
+        const Eigen::Vector3f xAxis = rot.col(0);
+        const Eigen::Vector3f yAxis = rot.col(1);
+        const Eigen::Vector3f zAxis = rot.col(2);
+        const Eigen::Vector3f t = pose.translation;
+
+        _viewer->setCameraPosition(
+                t(0), t(1), t(2),
+                t(0) + zAxis(0), t(1) + zAxis(1), t(2) + zAxis(2),
+                -yAxis(0), -yAxis(1), -yAxis(2)
+        );
+        _viewer->setSize(width, height);
+    }
 }
 

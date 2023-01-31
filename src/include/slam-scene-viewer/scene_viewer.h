@@ -73,6 +73,8 @@ namespace ns_viewer {
 
         void UnLock();
 
+        void SetViewPort(const Posef &pose, int width = 1920, int height = 1080);
+
     public:
 
         void RunSingleThread(int time = 100);

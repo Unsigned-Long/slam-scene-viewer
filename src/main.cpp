@@ -15,15 +15,15 @@ int main(int argc, char **argv) {
         viewer.AddPose(plane.LtoW);
 
         Eigen::AngleAxisf r1(-M_PI_4, Eigen::Vector3f(0, 0, 1));
-        Eigen::AngleAxisf r2(+M_PI_2, Eigen::Vector3f(1, 0, 0));
+        Eigen::AngleAxisf r2(+M_PI * 0.9, Eigen::Vector3f(1, 0, 0));
         auto rot = (r2 * r1).toRotationMatrix();
-        auto CtoW = Posef(rot.inverse(), Eigen::Vector3f(2, 1, 1));
+        auto CtoW = Posef(rot.inverse(), Eigen::Vector3f(2, -2, 10));
         auto LtoW = Posef(rot.inverse(), Eigen::Vector3f(2, 2, 1));
         auto ItoW = Posef(rot.inverse(), Eigen::Vector3f(2, 2, 2));
 
         viewer.AddCamera(CtoW, Colour::Green());
-        viewer.AddLiDAR(LtoW, ns_viewer::Colour::Red());
-        viewer.AddIMU(ItoW, ns_viewer::Colour::Blue());
+        viewer.AddLiDAR(LtoW, ns_viewer::Colour::Blue());
+        viewer.AddIMU(ItoW, ns_viewer::Colour::Red());
 
         viewer.AddLine(Eigen::Vector3f{1, 2, 1}, Eigen::Vector3f{0, 0, 0});
         viewer.AddArrow(
@@ -45,7 +45,7 @@ int main(int argc, char **argv) {
 
         viewer.AddBox(Eigen::Vector3f(-1.0f, -1.0f, -1.0f), Eigen::Vector3f(1.0f, 1.0f, 1.0f),
                       SceneViewer::GetUniqueColour().WithAlpha(0.3f));
-
+        viewer.SetViewPort(CtoW);
         viewer.RunMultiThread();
         std::cout << "hello, world!" << std::endl;
 
