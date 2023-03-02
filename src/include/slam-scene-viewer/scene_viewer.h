@@ -87,6 +87,10 @@ namespace ns_viewer {
         AddBox(const Eigen::Vector3f &boxMin, const Eigen::Vector3f &boxMax,
                const Colour &color = COLOUR_WHEEL.GetUniqueColour(), bool lineMode = true);
 
+        std::vector<std::string> AddSphere(const Eigen::Vector3f &center, float radius,
+                                           const Colour &color = COLOUR_WHEEL.GetUniqueColour(),
+                                           bool lineMode = false);
+
         std::vector<std::string>
         AddFeatures(const pcl::PointCloud<pcl::PointXYZRGBA>::Ptr &features, float size = 6.0f);
 

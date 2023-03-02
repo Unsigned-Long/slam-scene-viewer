@@ -165,6 +165,34 @@ namespace ns_viewer {
     }
 
     std::vector<std::string>
+    SceneViewer::AddSphere(const Vector3f &center, float radius, const Colour &color, bool lineMode) {
+        std::vector<std::string> names;
+
+        const auto name = GetShapeName("SPHERE-" + std::to_string(CUBE_PLANE_COUNT++));
+        AppendNames(names, name);
+
+        _viewer->addSphere<pcl::PointXYZ>(
+                {center(0), center(1), center(2)}, radius, color.r, color.g, color.b, name
+        );
+
+        if (lineMode) {
+            _viewer->setShapeRenderingProperties(
+                    pcl::visualization::RenderingProperties::PCL_VISUALIZER_REPRESENTATION,
+                    pcl::visualization::RenderingRepresentationProperties::PCL_VISUALIZER_REPRESENTATION_WIREFRAME,
+                    name
+            );
+            _viewer->setShapeRenderingProperties(
+                    pcl::visualization::RenderingProperties::PCL_VISUALIZER_LINE_WIDTH, 2.0, name
+            );
+        }
+        _viewer->setShapeRenderingProperties(
+                pcl::visualization::RenderingProperties::PCL_VISUALIZER_OPACITY, color.a, name
+        );
+
+        return names;
+    }
+
+    std::vector<std::string>
     SceneViewer::AddFeatures(const pcl::PointCloud<pcl::PointXYZRGBA>::Ptr &features, float size) {
         std::vector<std::string> names;
 

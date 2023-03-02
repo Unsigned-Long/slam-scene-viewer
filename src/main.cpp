@@ -45,6 +45,9 @@ int main(int argc, char **argv) {
 
         viewer.AddBox(Eigen::Vector3f(-1.0f, -1.0f, -1.0f), Eigen::Vector3f(1.0f, 1.0f, 1.0f),
                       SceneViewer::GetUniqueColour().WithAlpha(0.3f));
+
+        viewer.AddSphere({0, 0, 0}, 1.0f, ns_viewer::Colour::Red().WithAlpha(0.2f), false);
+
         viewer.SetViewPort(CtoW);
         viewer.RunMultiThread();
         std::cout << "hello, world!" << std::endl;
