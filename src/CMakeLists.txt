@@ -14,10 +14,7 @@ target_include_directories(
         ${LIBRARY_NAME} PUBLIC
         ${PCL_INCLUDE_DIRS}
         ${EIGEN_INCLUDE_DIRS}
-        # for interface
-        INTERFACE
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
 target_link_libraries(
